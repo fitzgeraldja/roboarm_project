@@ -1,4 +1,5 @@
 %% Matlab code for roboarm project
+clear all
 
 sets = [-0.11103, 0, 0.01771, 0, 0.04914, -0.16067;...
         -0.11103, 0, 0.01771, 0, -1.00913, -4.32732;...
@@ -19,12 +20,21 @@ for k=1:6
         cos(cumsum(x+sets(k+1,:)));...
         sin(cumsum(x+sets(k+1,:)))]*ones(6,1)...
         + [1,0,1,0,1,0]';
-    x0vec=[2*pi/7, 2*pi/7, 2*pi/7, 2*pi/7, 2*pi/7, (2*pi/7)+1];
+    x0vec=[2*pi/7, 2*pi/7, 2*pi/7, 2*pi/7, 2*pi/7, (2*pi/7)];
     X=fsolve(f,x0vec);
     sol{1,k}=X;
 end
 
+hold on
+for i=1:6
+    [p1,p2]=anglestopoints(sol{1,i},ones(1,6),6);
+    plot(p1,p2)
+end
 
+[perf1,perf2]=anglestopoints(ones(1,6)*(2*pi/7),ones(1,6),6);
+plot(perf1,perf2)
+    
+hold off
 
 
 
